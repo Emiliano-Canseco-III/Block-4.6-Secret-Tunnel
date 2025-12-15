@@ -36,8 +36,39 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const authenticate = async () => {
+    setError(null);
+    if (!token) {
+      setError("Authentication failed: No token found.");
+      throw new Error("no token in state.");
+    }
+
+    try {
+      const response = await fetch(`${API}/authenticate`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Authentication Failed");
+      }
+
+      setLocation("TUNNEL");
+    } catch (err) {
+      console.error("Authentication Error:", err);
+      setError(err.message);
+      throw err;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ token, location, signup, error }}>
+    <AuthContext.Provider
+      value={{ token, location, signup, authenticate, error }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,7 +1,6 @@
 /** Users can enter their name to receive a token from the API. */
+import AuthProvider from "./src/AuthContext";
 export default function Entrance() {
-  // TODO: call signup when form is submitted
-
   return (
     <>
       <h1>Cave Entrance</h1>
@@ -20,7 +19,7 @@ export default function Entrance() {
           Name
           <input name="name" />
         </label>
-        <button>Respond</button>
+        <button onClick="">Respond</button>
       </form>
     </>
   );
