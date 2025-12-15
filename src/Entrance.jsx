@@ -7,7 +7,7 @@ export default function Entrance() {
       <h1>Cave Entrance</h1>
       <p>Your journey has brought you to the base of a rocky mountain.</p>
       <p>
-        The quickest path forward is through the mountain's winding tunnels, but
+        The quickest path forward is through the mountains winding tunnels, but
         a sturdy metal gate sits closed before you.
       </p>
       <p>

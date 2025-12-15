@@ -5,15 +5,42 @@ const API = "https://fsa-jwt-practice.herokuapp.com";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState();
-  const [location, setLocation] = useState("GATE");
+  const [token, setToken] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
 
-  // TODO: signup
+  const signup = async (username) => {
+    setError(null);
+    try {
+      const response = await fetch(`${API}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
 
-  // TODO: authenticate
+      if (!response.ok) {
+        throw new Error("Signup Failed");
+      }
 
-  const value = { location };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+      const data = await response.json();
+
+      if (data.token) {
+        setToken(data.token);
+        setLocation("TABLET");
+      }
+    } catch (err) {
+      console.error("Signup Error:", err);
+      setError(err.message);
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, location, signup, error }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {
