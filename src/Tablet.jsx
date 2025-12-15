@@ -8,7 +8,7 @@ export default function Tablet() {
     try {
       await authenticate();
     } catch (err) {
-      console.log("Failed to authenticate");
+      console.log("Failed to authenticate:", err);
     }
   };
 
